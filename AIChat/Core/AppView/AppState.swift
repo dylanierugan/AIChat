@@ -1,3 +1,12 @@
+//
+//  AppState.swift
+//  AIChat
+//
+//  Created by Dylan Ierugan on 4/17/25.
+//
+
+import SwiftUI
+
 @Observable
 class AppState {
     

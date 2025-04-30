@@ -10,18 +10,18 @@ import SDWebImageSwiftUI
 
 struct ImageLoaderView: View {
     
-    var urlString: String = "https://picsum.photos/600/600"
+    var urlString: String = Constants.randomImage
     var resizingMode: ContentMode = .fill
     
     var body: some View {
         Rectangle()
             .overlay(
-            WebImage(url: URL(string: urlString))
-                .resizable()
-                .indicator(.activity)
-                .aspectRatio(contentMode: resizingMode)
-                .allowsHitTesting(false)
-        )
+                WebImage(url: URL(string: urlString))
+                    .resizable()
+                    .indicator(.activity)
+                    .aspectRatio(contentMode: resizingMode)
+                    .allowsHitTesting(false)
+            )
             .clipped()
     }
 }
