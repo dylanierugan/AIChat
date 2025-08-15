@@ -12,12 +12,14 @@ struct ExploreView: View {
     let avatar = AvatarModel.mock
     @State private var featuredAvatars: [AvatarModel] = AvatarModel.mocks
     @State private var categories: [CharacterOtion] = CharacterOtion.allCases
+    @State private var popularAvatars: [AvatarModel] = AvatarModel.mocks
     
     var body: some View {
         NavigationStack {
             List {
                 featuredSection
                 categorySection
+                popularSection
             }
             .navigationTitle("Explore")
         }
@@ -30,11 +32,12 @@ struct ExploreView: View {
                     HeroCellView(title: avatar.name,
                                  subtitle: avatar.characterDescription,
                                  imageName: avatar.profileImageName)
+                    .anyButton {}
                 }
             }
             .removeListRowFormatting()
         } header: {
-            Text("Featured avatars")
+            Text("Featured")
         }
     }
     
@@ -47,6 +50,7 @@ struct ExploreView: View {
                             CategoryCellView(title: category.rawValue.capitalized,
                                              imageName: Constants.randomImage)
                             .cornerRadius(16)
+                            .anyButton {}
                         }
                     }
                 }
@@ -58,6 +62,20 @@ struct ExploreView: View {
             .removeListRowFormatting()
         } header: {
             Text("Categories")
+        }
+    }
+    
+    private var popularSection: some View {
+        Section {
+            ForEach(popularAvatars, id: \.self) { avatar in
+                CustomListCellView(imageName: avatar.profileImageName,
+                                   title: avatar.name,
+                                   subtitle: avatar.characterDescription)
+            }
+            
+            .removeListRowFormatting()
+        } header: {
+            Text("Popular")
         }
     }
     

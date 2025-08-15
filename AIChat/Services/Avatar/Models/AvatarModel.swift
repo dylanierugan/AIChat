@@ -74,15 +74,20 @@ struct AvatarDescriptionBuilder {
     }
     
     var characterDescription: String {
+        let prefix = characterOption.startsWithVowel ? "An" : "A"
         return "A \(characterOption.rawValue) that is \(characterAction.rawValue) in the \(characterLocation.rawValue)"
     }
 }
 
 enum CharacterOtion: String, CaseIterable, Hashable {
-    case man, woman, alien, dog, cat
+    case man, woman, alien, dog, cat, elephant
     
     static var `default`: Self {
         .man
+    }
+    
+    var startsWithVowel: Bool {
+        ["a", "e", "i", "o", "u"].contains(rawValue.lowercased().first!)
     }
 }
 

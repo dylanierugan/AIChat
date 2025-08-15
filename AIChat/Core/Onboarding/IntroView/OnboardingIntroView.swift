@@ -19,7 +19,7 @@ struct OnboardingIntroView: View {
                 +
                 Text("and chat with them!\n\nHave ")
                 +
-                Text("real conversations")
+                Text("real conversations ")
                     .foregroundStyle(.accent)
                     .fontWeight(.semibold)
                 +
