@@ -43,7 +43,7 @@ struct UserModel {
         let now = Date()
         return [
             .init(
-                userID: "u_001",
+                userID: "user1",
                 dateCreated: Calendar.current.date(byAdding: .day, value: -30, to: now),
                 didCompleteOnboarding: true,
                 profileColorHEX: "#FFD93D"
@@ -68,6 +68,4 @@ struct UserModel {
             )
         ]
     }
-
-
 }
