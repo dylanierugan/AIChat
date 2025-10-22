@@ -23,6 +23,7 @@ struct ImageLoaderView: View {
                     .allowsHitTesting(false)
             )
             .clipped()
+            .drawingGroup()
     }
 }
 
