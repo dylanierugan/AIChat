@@ -11,7 +11,7 @@ struct ExploreView: View {
     
     let avatar = AvatarModel.mock
     @State private var featuredAvatars: [AvatarModel] = AvatarModel.mocks
-    @State private var categories: [CharacterOtion] = CharacterOtion.allCases
+    @State private var categories: [CharacterOption] = CharacterOption.allCases
     @State private var popularAvatars: [AvatarModel] = AvatarModel.mocks
     
     var body: some View {
@@ -47,7 +47,7 @@ struct ExploreView: View {
                 ScrollView(.horizontal) {
                     HStack(spacing: 12) {
                         ForEach(categories, id: \.self) { category in
-                            CategoryCellView(title: category.rawValue.capitalized,
+                            CategoryCellView(title: category.plural.capitalized,
                                              imageName: Constants.randomImage)
                             .cornerRadius(16)
                             .anyButton {}
