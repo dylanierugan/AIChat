@@ -11,7 +11,7 @@ struct AvatarModel: Hashable {
     
     let avatarid: String
     let name: String?
-    let characterOption: CharacterOtion?
+    let characterOption: CharacterOption?
     let characterAction: CharacterAction?
     let characterLocation: CharacterLocation?
     let profileImageName: String?
@@ -21,7 +21,7 @@ struct AvatarModel: Hashable {
     init(
         avatarid: String,
         name: String? = nil,
-        characterOption: CharacterOtion? = nil,
+        characterOption: CharacterOption? = nil,
         characterAction: CharacterAction? = nil,
         characterLocation: CharacterLocation? = nil,
         profileImageName: String? = nil,

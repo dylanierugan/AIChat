@@ -12,7 +12,7 @@ struct CreateAvatarView: View {
     @Environment(\.dismiss) private var dismiss
     
     @State private var avatarName: String = ""
-    @State private var characterOption: CharacterOtion = .default
+    @State private var characterOption: CharacterOption = .default
     @State private var characterAction: CharacterAction = .default
     @State private var characterLocation: CharacterLocation = .default
     
@@ -57,31 +57,25 @@ struct CreateAvatarView: View {
     
     private var attributesSection: some View {
         Section {
-            Picker(selection: $characterOption) {
-                ForEach(CharacterOtion.allCases, id: \.self) { option in
+            Picker("is a...", selection: $characterOption) {
+                ForEach(CharacterOption.allCases, id: \.self) { option in
                     Text(option.rawValue.capitalized)
-                        .tag(option)
+                        .tag(option as CharacterOption)
                 }
-            } label: {
-                Text("is a...")
             }
             
-            Picker(selection: $characterAction) {
+            Picker("that is...", selection: $characterAction) {
                 ForEach(CharacterAction.allCases, id: \.self) { action in
                     Text(action.rawValue.capitalized)
-                        .tag(action)
+                        .tag(action as CharacterAction)
                 }
-            } label: {
-                Text("that is...")
             }
             
-            Picker(selection: $characterLocation) {
+            Picker("in the...", selection: $characterLocation) {
                 ForEach(CharacterLocation.allCases, id: \.self) { location in
                     Text(location.rawValue.capitalized)
-                        .tag(location)
+                        .tag(location as CharacterLocation)
                 }
-            } label: {
-                Text("in the...")
             }
         }
     }
