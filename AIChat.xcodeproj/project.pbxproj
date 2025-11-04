@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		37472BC22EB9879500FDBC96 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 37472BC12EB9879500FDBC96 /* GoogleService-Info.plist */; };
+		37472BC52EB9893800FDBC96 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 37472BC42EB9893800FDBC96 /* FirebaseAuth */; };
 		375BB27E2E66B92D00560381 /* SwiftfulUtilities in Frameworks */ = {isa = PBXBuildFile; productRef = 375BB27D2E66B92D00560381 /* SwiftfulUtilities */; };
 		377175B12DB759310051436E /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 377175B02DB759310051436E /* SDWebImageSwiftUI */; };
 /* End PBXBuildFile section */
@@ -29,6 +31,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		37472BC12EB9879500FDBC96 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		37AE09C52D9D52C0001AB884 /* AIChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AIChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		37AE09D62D9D52C2001AB884 /* AIChatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AIChatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		37AE09E02D9D52C2001AB884 /* AIChatUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AIChatUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -58,6 +61,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				377175B12DB759310051436E /* SDWebImageSwiftUI in Frameworks */,
+				37472BC52EB9893800FDBC96 /* FirebaseAuth in Frameworks */,
 				375BB27E2E66B92D00560381 /* SwiftfulUtilities in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -86,6 +90,7 @@
 				37AE09D92D9D52C2001AB884 /* AIChatTests */,
 				37AE09E32D9D52C2001AB884 /* AIChatUITests */,
 				37AE09C62D9D52C0001AB884 /* Products */,
+				37472BC12EB9879500FDBC96 /* GoogleService-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -122,6 +127,7 @@
 			packageProductDependencies = (
 				377175B02DB759310051436E /* SDWebImageSwiftUI */,
 				375BB27D2E66B92D00560381 /* SwiftfulUtilities */,
+				37472BC42EB9893800FDBC96 /* FirebaseAuth */,
 			);
 			productName = AIChat;
 			productReference = 37AE09C52D9D52C0001AB884 /* AIChat.app */;
@@ -208,6 +214,7 @@
 			packageReferences = (
 				377175AF2DB759310051436E /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 				375BB27C2E66B92D00560381 /* XCRemoteSwiftPackageReference "SwiftfulUtilities" */,
+				37472BC32EB9893800FDBC96 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 37AE09C62D9D52C0001AB884 /* Products */;
@@ -226,6 +233,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37472BC22EB9879500FDBC96 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -637,6 +645,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		37472BC32EB9893800FDBC96 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.5.0;
+			};
+		};
 		375BB27C2E66B92D00560381 /* XCRemoteSwiftPackageReference "SwiftfulUtilities" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SwiftfulThinking/SwiftfulUtilities.git";
@@ -656,6 +672,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		37472BC42EB9893800FDBC96 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 37472BC32EB9893800FDBC96 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
 		375BB27D2E66B92D00560381 /* SwiftfulUtilities */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 375BB27C2E66B92D00560381 /* XCRemoteSwiftPackageReference "SwiftfulUtilities" */;
