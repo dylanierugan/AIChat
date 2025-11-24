@@ -9,6 +9,8 @@ import SwiftUI
 
 struct WelcomeView: View {
     
+    @Environment(AppState.self) private var root
+    
     @State private var imageName: String = Constants.randomImage
     @State private var showSignInView: Bool = false
     
@@ -27,8 +29,14 @@ struct WelcomeView: View {
                 policyLinks
             }
             .sheet(isPresented: $showSignInView) {
-                CreateAccountView(title: "Sign in", subtitle: "Connect to an existing account.")
-                    .presentationDetents([.medium])
+                CreateAccountView(title: "Sign in",
+                                  subtitle: "Connect to an existing account.",
+                                  onDidSignIn: { isNewUser in
+                    handleDidSignIn(isNewUser: isNewUser)
+                }
+                                  
+                )
+                .presentationDetents([.medium])
             }
         }
     }
@@ -58,10 +66,22 @@ struct WelcomeView: View {
                 .padding(8)
                 .tappableBackground()
                 .onTapGesture {
-                    showSignInView = true
+                    onSignInTapped()
                 }
         }
         .padding(16)
+    }
+    
+    private func handleDidSignIn(isNewUser: Bool) {
+        if isNewUser {
+            
+        } else {
+            root.updateViewState(showTabBarView: true)
+        }
+    }
+    
+    private func onSignInTapped() {
+        showSignInView = true
     }
     
     private var policyLinks: some View {
