@@ -7,63 +7,17 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "95441343-FBF9-492B-97B6-C0C1AF544AD4"
-            shouldBeEnabled = "Yes"
+            uuid = "6285440F-EAC7-49A6-A82F-F22162ED6354"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "AIChat/Core/CreateAccount/CreateAccountView.swift"
+            filePath = "AIChat/Services/Auth/AuthManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "50"
-            endingLineNumber = "50"
-            landmarkName = "onSignInApplePressed()"
+            startingLineNumber = "30"
+            endingLineNumber = "30"
+            landmarkName = "addAuthListener()"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "A178D94B-520D-4F41-AB11-03044BAFE5D1"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "AIChat/Core/CreateAccount/CreateAccountView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "52"
-            endingLineNumber = "52"
-            landmarkName = "onSignInApplePressed()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "A178D94B-520D-4F41-AB11-03044BAFE5D1 - fc6b125f9a24b76c"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(3) suspend resume partial function for closure #1 () async -&gt; () in AIChat.CreateAccountView.onSignInApplePressed() -&gt; ()"
-                  moduleName = "AIChat.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/dylanierugan/Documents/Apps/AIChat/AIChat/Core/CreateAccount/CreateAccountView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "52"
-                  endingLineNumber = "52">
-               </Location>
-               <Location
-                  uuid = "A178D94B-520D-4F41-AB11-03044BAFE5D1 - 59425ee9cb11516b"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(4) suspend resume partial function for closure #1 () async -&gt; () in AIChat.CreateAccountView.onSignInApplePressed() -&gt; ()"
-                  moduleName = "AIChat.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/dylanierugan/Documents/Apps/AIChat/AIChat/Core/CreateAccount/CreateAccountView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "52"
-                  endingLineNumber = "52">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
