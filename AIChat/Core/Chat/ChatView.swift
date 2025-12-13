@@ -89,7 +89,7 @@ struct ChatView: View {
         ScrollView {
             LazyVStack(spacing: 24) {
                 ForEach(chatMessages) { message in
-                    let isCurrentUser = message.authorId == currentUser?.userID
+                    let isCurrentUser = message.authorId == currentUser?.userId
                     ChatBubbleViewBuilder(
                         message: message,
                         isCurrentUser: isCurrentUser,
@@ -131,7 +131,7 @@ struct ChatView: View {
             let message = ChatMessageModel(
                 id: UUID().uuidString,
                 chatId: UUID().uuidString,
-                authorId: currentUser.userID,
+                authorId: currentUser.userId,
                 content: content,
                 seenByIds: nil,
                 dateCreated: .now
