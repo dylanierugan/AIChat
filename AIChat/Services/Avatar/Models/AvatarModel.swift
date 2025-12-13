@@ -9,7 +9,7 @@ import Foundation
 
 struct AvatarModel: Hashable {
     
-    let avatarid: String
+    let avatarId: String
     let name: String?
     let characterOption: CharacterOption?
     let characterAction: CharacterAction?
@@ -19,7 +19,7 @@ struct AvatarModel: Hashable {
     let datecreated: Date?
     
     init(
-        avatarid: String,
+        avatarId: String,
         name: String? = nil,
         characterOption: CharacterOption? = nil,
         characterAction: CharacterAction? = nil,
@@ -28,7 +28,7 @@ struct AvatarModel: Hashable {
         authorId: String? = nil,
         datecreated: Date? = nil
     ) {
-        self.avatarid = avatarid
+        self.avatarId = avatarId
         self.name = name
         self.characterOption = characterOption
         self.characterAction = characterAction
@@ -42,16 +42,16 @@ struct AvatarModel: Hashable {
         AvatarDescriptionBuilder(avatar: self).characterDescription
     }
     
-    static var mock : AvatarModel {
+    static var mock: AvatarModel {
         mocks[0]
     }
     
-    static var mocks : [AvatarModel] {
+    static var mocks: [AvatarModel] {
         return [
-            AvatarModel(avatarid: UUID().uuidString, name: "Alpha", characterOption: .alien, characterAction: .smiling, characterLocation: .park, profileImageName: Constants.randomImage, authorId: UUID().uuidString, datecreated: .now),
-            AvatarModel(avatarid: UUID().uuidString, name: "Beta", characterOption: .dog, characterAction: .eating, characterLocation: .forest, profileImageName: Constants.randomImage, authorId: UUID().uuidString, datecreated: .now),
-            AvatarModel(avatarid: UUID().uuidString, name: "Gamma", characterOption: .cat, characterAction: .drinking, characterLocation: .museum, profileImageName: Constants.randomImage, authorId: UUID().uuidString, datecreated: .now),
-            AvatarModel(avatarid: UUID().uuidString, name: "Delta", characterOption: .dog, characterAction: .shopping, characterLocation: .park, profileImageName: Constants.randomImage, authorId: UUID().uuidString, datecreated: .now)
+            AvatarModel(avatarId: UUID().uuidString, name: "Alpha", characterOption: .alien, characterAction: .smiling, characterLocation: .park, profileImageName: Constants.randomImage, authorId: UUID().uuidString, datecreated: .now),
+            AvatarModel(avatarId: UUID().uuidString, name: "Beta", characterOption: .dog, characterAction: .eating, characterLocation: .forest, profileImageName: Constants.randomImage, authorId: UUID().uuidString, datecreated: .now),
+            AvatarModel(avatarId: UUID().uuidString, name: "Gamma", characterOption: .cat, characterAction: .drinking, characterLocation: .museum, profileImageName: Constants.randomImage, authorId: UUID().uuidString, datecreated: .now),
+            AvatarModel(avatarId: UUID().uuidString, name: "Delta", characterOption: .dog, characterAction: .shopping, characterLocation: .park, profileImageName: Constants.randomImage, authorId: UUID().uuidString, datecreated: .now)
         ]
     }
 }

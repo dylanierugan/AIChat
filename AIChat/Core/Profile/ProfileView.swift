@@ -8,15 +8,17 @@
 import SwiftUI
 
 struct ProfileView: View {
+
+    @Environment(UserManager.self) private var userManager
     
-    @State var showSettingsView: Bool = false
-    @State var showCreateAvatarView: Bool = false
-    @State private var currentUser: UserModel = .mock
+    @State private var showSettingsView: Bool = false
+    @State private var showCreateAvatarView: Bool = false
+    @State private var currentUser: UserModel?
     @State private var myAvatars: [AvatarModel] = []
     @State private var isLoading: Bool = true
-    
+
     @State private var path: [NavigationPathOption] = []
-    
+
     var body: some View {
         NavigationStack(path: $path) {
             List {
@@ -43,6 +45,8 @@ struct ProfileView: View {
     }
     
     private func loadData() async {
+        self.currentUser = userManager.currentUser
+        
         try? await Task.sleep(for: .seconds(5))
         isLoading = false
         myAvatars = AvatarModel.mocks
@@ -52,12 +56,11 @@ struct ProfileView: View {
         Section {
             ZStack {
                 Circle()
-                    .fill(currentUser.profileColorCalculated)
+                    .fill(currentUser?.profileColorCalculated ?? .accent)
             }
             .frame(width: 100, height: 100)
             .frame(maxWidth: .infinity)
             .removeListRowFormatting()
-            
         }
     }
     
@@ -94,37 +97,38 @@ struct ProfileView: View {
             }
         } header: {
             HStack(spacing: 0) {
-                Text("My Avatars")
+                Text("My avatars")
                 Spacer()
+                
                 Image(systemName: "plus.circle.fill")
                     .font(.title)
                     .foregroundStyle(.accent)
                     .anyButton {
-                        onNewButtonAvatarPress()
+                        onNewAvatarButtonPressed()
                     }
             }
         }
     }
-    
+
     private var settingsButton: some View {
         Image(systemName: "gear")
             .font(.headline)
             .foregroundStyle(.accent)
             .anyButton {
-                onSettingButtonPressed()
+                onSettingsButtonPressed()
             }
     }
-    
-    private func onSettingButtonPressed() {
+
+    private func onSettingsButtonPressed() {
         showSettingsView = true
     }
     
-    private func onNewButtonAvatarPress() {
+    private func onNewAvatarButtonPressed() {
         showCreateAvatarView = true
     }
     
     private func onAvatarPressed(avatar: AvatarModel) {
-        path.append(.chat(avatarId: avatar.avatarid))
+        path.append(.chat(avatarId: avatar.avatarId))
     }
     
     private func onDeleteAvatar(indexSet: IndexSet) {
@@ -135,5 +139,6 @@ struct ProfileView: View {
 
 #Preview {
     ProfileView()
+        .environment(UserManager(service: MockUserService(user: .mock)))
         .environment(AppState())
 }

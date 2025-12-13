@@ -11,13 +11,14 @@ struct SettingsView: View {
     
     @Environment(\.dismiss) private var dismiss
     @Environment(AuthManager.self) private var authManager
+    @Environment(UserManager.self) private var userManager
     @Environment(AppState.self) private var appState
     
     @State private var isPremium: Bool = false
-    @State private var isAnonymousUser: Bool = true
+    @State private var isAnonymousUser: Bool = false
     @State private var showCreateAccountView: Bool = false
     @State private var showAlert: AnyAppAlert?
-    
+
     var body: some View {
         NavigationStack {
             List {
@@ -25,15 +26,15 @@ struct SettingsView: View {
                 purchaseSection
                 applicationSection
             }
-            .navigationTitle(Text("Settings"))
+            .navigationTitle("Settings")
             .sheet(isPresented: $showCreateAccountView, onDismiss: {
-                setAnonymousAcountStatus()
+                setAnonymousAccountStatus()
             }, content: {
                 CreateAccountView()
                     .presentationDetents([.medium])
             })
             .onAppear {
-                setAnonymousAcountStatus()
+                setAnonymousAccountStatus()
             }
             .showCustomAlert(alert: $showAlert)
         }
@@ -41,28 +42,27 @@ struct SettingsView: View {
     
     private var accountSection: some View {
         Section {
-            
             if isAnonymousUser {
                 Text("Save & back-up account")
                     .rowFormatting()
                     .anyButton(.highlight) {
-                        onCreateAccountTapped()
+                        onCreateAccountPressed()
                     }
                     .removeListRowFormatting()
             } else {
-                Text("Sign Out")
+                Text("Sign out")
                     .rowFormatting()
                     .anyButton(.highlight) {
-                        onSignOutTapped()
+                        onSignOutPressed()
                     }
                     .removeListRowFormatting()
             }
             
-            Text("Delete Account")
+            Text("Delete account")
                 .foregroundStyle(.red)
                 .rowFormatting()
                 .anyButton(.highlight) {
-                    onDeleteAccountTapped()
+                    onDeleteAccountPressed()
                 }
                 .removeListRowFormatting()
         } header: {
@@ -72,9 +72,9 @@ struct SettingsView: View {
     
     private var purchaseSection: some View {
         Section {
-            HStack {
-                Text("Account Status: \(isPremium ? "Premieum" : "FREE")")
-                Spacer()
+            HStack(spacing: 8) {
+                Text("Account status: \(isPremium ? "PREMIUM" : "FREE")")
+                Spacer(minLength: 0)
                 if isPremium {
                     Text("MANAGE")
                         .badgeButton()
@@ -82,7 +82,7 @@ struct SettingsView: View {
             }
             .rowFormatting()
             .anyButton(.highlight) {
-                onSignOutTapped()
+
             }
             .disabled(!isPremium)
             .removeListRowFormatting()
@@ -93,13 +93,16 @@ struct SettingsView: View {
     
     private var applicationSection: some View {
         Section {
-            HStack {
+            HStack(spacing: 8) {
                 Text("Version")
                 Spacer(minLength: 0)
                 Text(Utilities.appVersion ?? "")
                     .foregroundStyle(.secondary)
             }
-            HStack {
+            .rowFormatting()
+            .removeListRowFormatting()
+            
+            HStack(spacing: 8) {
                 Text("Build Number")
                 Spacer(minLength: 0)
                 Text(Utilities.buildNumber ?? "")
@@ -107,45 +110,49 @@ struct SettingsView: View {
             }
             .rowFormatting()
             .removeListRowFormatting()
+            
             Text("Contact us")
                 .foregroundStyle(.blue)
                 .rowFormatting()
-                .anyButton(.highlight) {
+                .anyButton(.highlight, action: {
                     
-                }
+                })
                 .removeListRowFormatting()
         } header: {
             Text("Application")
         } footer: {
-            Text("Created by Dylan")
+            Text("Created by Swiftful Thinking.\nLearn more at www.swiftful-thinking.com.")
+                .baselineOffset(6)
         }
     }
     
-    func setAnonymousAcountStatus() {
+    func setAnonymousAccountStatus() {
         isAnonymousUser = authManager.auth?.isAnonymous == true
     }
     
-    func onSignOutTapped() {
+    func onSignOutPressed() {
         Task {
             do {
                 try authManager.signOut()
-                await dissmissScreen()
+                try userManager.signOut()
+                
+                await dismissScreen()
             } catch {
                 showAlert = AnyAppAlert(error: error)
             }
         }
     }
     
-    private func dissmissScreen() async {
+    private func dismissScreen() async {
         dismiss()
         try? await Task.sleep(for: .seconds(1))
         appState.updateViewState(showTabBarView: false)
     }
     
-    func onDeleteAccountTapped() {
+    func onDeleteAccountPressed() {
         showAlert = AnyAppAlert(
-            title: "Delete account?",
-            subtitle: "This action is permanent and cannot be undone.",
+            title: "Delete Account?",
+            subtitle: "This action is permanent and cannot be undone. Your data will be deleted from our server forever.",
             buttons: {
                 AnyView(
                     Button("Delete", role: .destructive, action: {
@@ -160,14 +167,16 @@ struct SettingsView: View {
         Task {
             do {
                 try await authManager.deleteAccount()
-                await dissmissScreen()
+                try await userManager.deleteCurrentUser()
+                
+                await dismissScreen()
             } catch {
                 showAlert = AnyAppAlert(error: error)
             }
         }
     }
     
-    func onCreateAccountTapped() {
+    func onCreateAccountPressed() {
         showCreateAccountView = true
     }
 }
@@ -180,24 +189,24 @@ fileprivate extension View {
             .padding(.horizontal, 16)
             .background(Color(uiColor: .systemBackground))
     }
-    
 }
 
 #Preview("No auth") {
     SettingsView()
         .environment(AuthManager(service: MockAuthService(user: nil)))
+        .environment(UserManager(service: MockUserService(user: nil)))
         .environment(AppState())
 }
-
 #Preview("Anonymous") {
     SettingsView()
         .environment(AuthManager(service: MockAuthService(user: UserAuthInfo.mock(isAnonymous: true))))
+        .environment(UserManager(service: MockUserService(user: .mock)))
         .environment(AppState())
 }
-
 #Preview("Not anonymous") {
     SettingsView()
         .environment(AuthManager(service: MockAuthService(user: UserAuthInfo.mock(isAnonymous: false))))
+        .environment(UserManager(service: MockUserService(user: .mock)))
         .environment(AppState())
 }
 

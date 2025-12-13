@@ -41,7 +41,7 @@ struct CategoryListView: View {
     }
     
     private func onAvatarPressed(avatar: AvatarModel) {
-        path.append(.chat(avatarId: avatar.avatarid))
+        path.append(.chat(avatarId: avatar.avatarId))
     }
 }
 
