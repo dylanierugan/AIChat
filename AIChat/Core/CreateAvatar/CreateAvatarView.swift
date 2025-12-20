@@ -10,24 +10,25 @@ import SwiftUI
 struct CreateAvatarView: View {
     
     @Environment(\.dismiss) private var dismiss
+    @Environment(AIManager.self) private var aiManager
     
     @State private var avatarName: String = ""
     @State private var characterOption: CharacterOption = .default
     @State private var characterAction: CharacterAction = .default
     @State private var characterLocation: CharacterLocation = .default
-    
+
     @State private var isGenerating: Bool = false
     @State private var generatedImage: UIImage?
-    
+
     @State private var isSaving: Bool = false
-    
+
     var body: some View {
         NavigationStack {
             List {
                 nameSection
                 attributesSection
                 imageSection
-                saveButtonSection
+                saveSection
             }
             .navigationTitle("Create Avatar")
             .toolbar {
@@ -43,13 +44,13 @@ struct CreateAvatarView: View {
             .font(.title2)
             .fontWeight(.semibold)
             .anyButton(.plain) {
-                backButtonTapped()
+                onBackButtonPressed()
             }
     }
     
     private var nameSection: some View {
         Section {
-            TextField("Player 1:", text: $avatarName)
+            TextField("Player 1", text: $avatarName)
         } header: {
             Text("Name your avatar*")
         }
@@ -57,26 +58,34 @@ struct CreateAvatarView: View {
     
     private var attributesSection: some View {
         Section {
-            Picker("is a...", selection: $characterOption) {
+            Picker(selection: $characterOption) {
                 ForEach(CharacterOption.allCases, id: \.self) { option in
                     Text(option.rawValue.capitalized)
-                        .tag(option as CharacterOption)
+                        .tag(option)
                 }
+            } label: {
+                Text("is a...")
+            }
+
+            Picker(selection: $characterAction) {
+                ForEach(CharacterAction.allCases, id: \.self) { option in
+                    Text(option.rawValue.capitalized)
+                        .tag(option)
+                }
+            } label: {
+                Text("that is...")
             }
             
-            Picker("that is...", selection: $characterAction) {
-                ForEach(CharacterAction.allCases, id: \.self) { action in
-                    Text(action.rawValue.capitalized)
-                        .tag(action as CharacterAction)
+            Picker(selection: $characterLocation) {
+                ForEach(CharacterLocation.allCases, id: \.self) { option in
+                    Text(option.rawValue.capitalized)
+                        .tag(option)
                 }
+            } label: {
+                Text("in the...")
             }
-            
-            Picker("in the...", selection: $characterLocation) {
-                ForEach(CharacterLocation.allCases, id: \.self) { location in
-                    Text(location.rawValue.capitalized)
-                        .tag(location as CharacterLocation)
-                }
-            }
+        } header: {
+            Text("Attributes")
         }
     }
     
@@ -88,12 +97,13 @@ struct CreateAvatarView: View {
                         .underline()
                         .foregroundStyle(.accent)
                         .anyButton(.plain) {
-                            onGenerateImageTapped()
+                            onGenerateImagePressed()
                         }
                         .opacity(isGenerating ? 0 : 1)
-                    
+                        .padding()
+
                     ProgressView()
-                        .tint(.accentColor)
+                        .tint(.accent)
                         .opacity(isGenerating ? 1 : 0)
                 }
                 .disabled(isGenerating || avatarName.isEmpty)
@@ -115,46 +125,59 @@ struct CreateAvatarView: View {
         }
     }
     
-    private var saveButtonSection: some View {
+    private var saveSection: some View {
         Section {
             AsyncCallToActionButton(
                 isLoading: isSaving,
-                title: "Save") {
-                    onSaveTapped()
-                }
+                title: "Save",
+                action: onSavePressed
+            )
+            .removeListRowFormatting()
+            .padding(.top, 24)
+            .opacity(generatedImage == nil ? 0.5 : 1.0)
+            .disabled(generatedImage == nil)
         }
-        .removeListRowFormatting()
-        .padding(.top, 24)
-        .opacity(generatedImage == nil ? 0.5 : 1)
-        .disabled(generatedImage == nil)
     }
     
-    private func backButtonTapped() {
+    private func onBackButtonPressed() {
         dismiss()
     }
     
-    private func onGenerateImageTapped() {
+    private func onGenerateImagePressed() {
         isGenerating = true
         
         Task {
-            try? await Task.sleep(for: .seconds(3))
-            generatedImage = UIImage(systemName: "star.fill")
+            do {
+                let prompt = AvatarDescriptionBuilder(
+                    characterOption: characterOption,
+                    characterAction: characterAction,
+                    characterLocation: characterLocation
+                )
+                .characterDescription
+                
+                generatedImage = try await aiManager.generateImage(input: prompt)
+                
+            } catch {
+                print("Error generating image: \(error)")
+            }
+            
             isGenerating = false
         }
     }
     
-    private func onSaveTapped() {
+    private func onSavePressed() {
         isSaving = true
         
         Task {
             try? await Task.sleep(for: .seconds(3))
+            
             dismiss()
             isSaving = false
         }
-        
     }
 }
 
 #Preview {
     CreateAvatarView()
+        .environment(AIManager(service: MockAIService()))
 }

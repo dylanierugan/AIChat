@@ -8,17 +8,18 @@
 import SwiftUI
 
 struct AppView: View {
-    
+
     @Environment(AuthManager.self) private var authManager
     @Environment(UserManager.self) private var userManager
     @State var appState: AppState = AppState()
-    
+
     var body: some View {
         AppViewBuilder(
             showTabBar: appState.showTabBar,
             tabbarView: {
                 TabBarView()
-            }, onboardingView: {
+            },
+            onboardingView: {
                 WelcomeView()
             }
         )
@@ -43,20 +44,20 @@ struct AppView: View {
             do {
                 try await userManager.logIn(auth: user, isNewUser: false)
             } catch {
-                print("Failed to log in to auth for exisiting user: \(error)")
+                print("Failed to log in to auth for existing user: \(error)")
                 try? await Task.sleep(for: .seconds(5))
                 await checkUserStatus()
             }
-            
         } else {
             // User is not authenticated
             
             do {
                 let result = try await authManager.signInAnonymously()
                 
+                // log in to app
                 print("Sign in anonymous success: \(result.user.uid)")
                 
-                // Log In
+                // Log in
                 try await userManager.logIn(auth: result.user, isNewUser: result.isNewUser)
                 
             } catch {
@@ -68,14 +69,15 @@ struct AppView: View {
     }
 }
 
-#Preview("Tab Bar") {
+#Preview("AppView - Tabbar") {
     AppView(appState: AppState(showTabBar: true))
-        .environment(UserManager(service: MockUserService(user: .mock)))
+        .environment(UserManager(services: MockUserServices(user: .mock)))
+        .environment(UserManager(services: MockUserServices(user: .mock)))
         .environment(AuthManager(service: MockAuthService(user: .mock())))
-}
 
-#Preview("Onbaording") {
+}
+#Preview("AppView - Onboarding") {
     AppView(appState: AppState(showTabBar: false))
-        .environment(UserManager(service: MockUserService(user: nil)))
+        .environment(UserManager(services: MockUserServices(user: nil)))
         .environment(AuthManager(service: MockAuthService(user: nil)))
 }
