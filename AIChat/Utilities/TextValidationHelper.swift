@@ -9,10 +9,9 @@ import Foundation
 
 struct TextValidationHelper {
     
-    static func checkIfTextIsValid(text: String) throws {
-        let minCharacterCount = 4
-        guard text.count >= minCharacterCount else {
-            throw TextValidationError.notEnoughCharacters(min: minCharacterCount)
+    static func checkIfTextIsValid(text: String, minimumCharacterCount: Int) throws {
+        guard text.count >= minimumCharacterCount else {
+            throw TextValidationError.notEnoughCharacters(min: minimumCharacterCount)
         }
         
         let badWords: [String] = ["bitch", "ass", "shit"]

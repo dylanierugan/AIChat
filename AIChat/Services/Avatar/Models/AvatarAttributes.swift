@@ -5,7 +5,7 @@
 //  Created by Dylan Ierugan on 9/12/25.
 //
 
-enum CharacterOption: String, CaseIterable, Hashable {
+enum CharacterOption: String, CaseIterable, Hashable, Codable {
     case man, woman, alien, dog, cat, elephant
     
     static var `default`: Self {
@@ -42,7 +42,7 @@ enum CharacterAction: String, CaseIterable, Hashable {
     }
 }
 
-enum CharacterLocation: String, CaseIterable, Hashable {
+enum CharacterLocation: String, CaseIterable, Hashable, Codable {
     case park, mall, museum, beach, forest, city, mountain
     static var `default`: Self {
         .park

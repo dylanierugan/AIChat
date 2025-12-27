@@ -14,6 +14,7 @@
 		37472BC52EB9893800FDBC96 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 37472BC42EB9893800FDBC96 /* FirebaseAuth */; };
 		375BB27E2E66B92D00560381 /* SwiftfulUtilities in Frameworks */ = {isa = PBXBuildFile; productRef = 375BB27D2E66B92D00560381 /* SwiftfulUtilities */; };
 		377175B12DB759310051436E /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 377175B02DB759310051436E /* SDWebImageSwiftUI */; };
+		377DB2172EFF5F760084B66B /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 377DB2162EFF5F760084B66B /* FirebaseStorage */; };
 		378974732EC16F9100CB53F1 /* SignInAppleAsync in Frameworks */ = {isa = PBXBuildFile; productRef = 378974722EC16F9100CB53F1 /* SignInAppleAsync */; };
 /* End PBXBuildFile section */
 
@@ -69,6 +70,7 @@
 				370475782EEDADB600803CDF /* SwiftfulFirestore in Frameworks */,
 				37472BC52EB9893800FDBC96 /* FirebaseAuth in Frameworks */,
 				3704764A2EF6E9AA00803CDF /* OpenAI in Frameworks */,
+				377DB2172EFF5F760084B66B /* FirebaseStorage in Frameworks */,
 				370475712EECE4FF00803CDF /* FirebaseFirestore in Frameworks */,
 				375BB27E2E66B92D00560381 /* SwiftfulUtilities in Frameworks */,
 			);
@@ -148,6 +150,7 @@
 				370475702EECE4FF00803CDF /* FirebaseFirestore */,
 				370475772EEDADB600803CDF /* SwiftfulFirestore */,
 				370476492EF6E9AA00803CDF /* OpenAI */,
+				377DB2162EFF5F760084B66B /* FirebaseStorage */,
 			);
 			productName = AIChat;
 			productReference = 37AE09C52D9D52C0001AB884 /* AIChat.app */;
@@ -748,6 +751,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 377175AF2DB759310051436E /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
 			productName = SDWebImageSwiftUI;
+		};
+		377DB2162EFF5F760084B66B /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 37472BC32EB9893800FDBC96 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
 		};
 		378974722EC16F9100CB53F1 /* SignInAppleAsync */ = {
 			isa = XCSwiftPackageProductDependency;

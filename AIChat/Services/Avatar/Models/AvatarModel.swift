@@ -7,16 +7,16 @@
 
 import Foundation
 
-struct AvatarModel: Hashable {
+struct AvatarModel: Hashable, Codable {
     
     let avatarId: String
     let name: String?
     let characterOption: CharacterOption?
     let characterAction: CharacterAction?
     let characterLocation: CharacterLocation?
-    let profileImageName: String?
+    private(set) var profileImageName: String?
     let authorId: String?
-    let datecreated: Date?
+    let dateCreated: Date?
     
     init(
         avatarId: String,
@@ -26,7 +26,7 @@ struct AvatarModel: Hashable {
         characterLocation: CharacterLocation? = nil,
         profileImageName: String? = nil,
         authorId: String? = nil,
-        datecreated: Date? = nil
+        dateCreated: Date? = nil
     ) {
         self.avatarId = avatarId
         self.name = name
@@ -35,23 +35,38 @@ struct AvatarModel: Hashable {
         self.characterLocation = characterLocation
         self.profileImageName = profileImageName
         self.authorId = authorId
-        self.datecreated = datecreated
+        self.dateCreated = dateCreated
     }
     
     var characterDescription: String {
         AvatarDescriptionBuilder(avatar: self).characterDescription
     }
     
-    static var mock: AvatarModel {
+    mutating func updateProfileImage(imageName: String) {
+        profileImageName = imageName
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case avatarId = "avatar_id"
+        case name
+        case characterOption = "character_option"
+        case characterAction = "character_action"
+        case characterLocation = "character_location"
+        case profileImageName = "profile_image_name"
+        case authorId = "author_id"
+        case dateCreated = "date_created"
+    }
+    
+    static var mock: Self {
         mocks[0]
     }
     
-    static var mocks: [AvatarModel] {
-        return [
-            AvatarModel(avatarId: UUID().uuidString, name: "Alpha", characterOption: .alien, characterAction: .smiling, characterLocation: .park, profileImageName: Constants.randomImage, authorId: UUID().uuidString, datecreated: .now),
-            AvatarModel(avatarId: UUID().uuidString, name: "Beta", characterOption: .dog, characterAction: .eating, characterLocation: .forest, profileImageName: Constants.randomImage, authorId: UUID().uuidString, datecreated: .now),
-            AvatarModel(avatarId: UUID().uuidString, name: "Gamma", characterOption: .cat, characterAction: .drinking, characterLocation: .museum, profileImageName: Constants.randomImage, authorId: UUID().uuidString, datecreated: .now),
-            AvatarModel(avatarId: UUID().uuidString, name: "Delta", characterOption: .dog, characterAction: .shopping, characterLocation: .park, profileImageName: Constants.randomImage, authorId: UUID().uuidString, datecreated: .now)
+    static var mocks: [Self] {
+        [
+            AvatarModel(avatarId: UUID().uuidString, name: "Alpha", characterOption: .alien, characterAction: .smiling, characterLocation: .park, profileImageName: Constants.randomImage, authorId: UUID().uuidString, dateCreated: .now),
+            AvatarModel(avatarId: UUID().uuidString, name: "Beta", characterOption: .dog, characterAction: .eating, characterLocation: .forest, profileImageName: Constants.randomImage, authorId: UUID().uuidString, dateCreated: .now),
+            AvatarModel(avatarId: UUID().uuidString, name: "Gamma", characterOption: .cat, characterAction: .drinking, characterLocation: .museum, profileImageName: Constants.randomImage, authorId: UUID().uuidString, dateCreated: .now),
+            AvatarModel(avatarId: UUID().uuidString, name: "Delta", characterOption: .woman, characterAction: .shopping, characterLocation: .park, profileImageName: Constants.randomImage, authorId: UUID().uuidString, dateCreated: .now)
         ]
     }
 }
