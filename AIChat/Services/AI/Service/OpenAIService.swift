@@ -38,4 +38,3 @@ struct OpenAIService: AIService {
         case invalidResponse
     }
 }
-

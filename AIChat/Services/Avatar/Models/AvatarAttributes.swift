@@ -34,7 +34,7 @@ enum CharacterOption: String, CaseIterable, Hashable, Codable {
     }
 }
 
-enum CharacterAction: String, CaseIterable, Hashable {
+enum CharacterAction: String, CaseIterable, Hashable, Codable {
     case smiling, sitting, eating, drinking, walking, shopping, studying, working, relaxing, crying
     
     static var `default`: Self {

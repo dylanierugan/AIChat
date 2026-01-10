@@ -9,55 +9,69 @@ import SwiftUI
 
 struct ChatsView: View {
     
+    @Environment(AvatarManager.self) private var avatarManager
+    
     @State private var chats: [ChatModel] = ChatModel.mocks
     @State private var recentAvatars: [AvatarModel] = AvatarModel.mocks
-    
+
     @State private var path: [NavigationPathOption] = []
-    
+
     var body: some View {
         NavigationStack(path: $path) {
             List {
-                
                 if !recentAvatars.isEmpty {
                     recentsSection
                 }
-                
                 chatsSection
             }
             .navigationTitle("Chats")
             .navigationDestinationForCoreModule(path: $path)
+            .onAppear {
+                loadRecentAvatars()
+            }
+        }
+    }
+    
+    private func loadRecentAvatars() {
+        do {
+            recentAvatars = try avatarManager.getRecentAvatars()
+        } catch {
+            print("Failed to load recents.")
         }
     }
     
     private var chatsSection: some View {
-        Group {
+        Section {
             if chats.isEmpty {
                 Text("Your chats will appear here!")
                     .foregroundStyle(.secondary)
                     .font(.title3)
+                    .frame(maxWidth: .infinity)
                     .multilineTextAlignment(.center)
                     .padding(40)
                     .removeListRowFormatting()
             } else {
                 ForEach(chats) { chat in
                     ChatRowCellViewBuilder(
-                        currentUserId: nil, // Add CUID
+                        currentUserId: nil, // Add cuid
                         chat: chat,
                         getAvatar: {
                             try? await Task.sleep(for: .seconds(1))
-                            return .mock
+                            return AvatarModel.mocks.randomElement()!
                         },
                         getLastChatMessage: {
-                            try? await Task.sleep(for: .seconds(5))
-                            return .mock
+                            try? await Task.sleep(for: .seconds(1))
+                            return ChatMessageModel.mocks.randomElement()!
                         }
                     )
-                    .anyButton(.highlight) {
+                    .anyButton(.highlight, action: {
                         onChatPressed(chat: chat)
-                    }
+                    })
                     .removeListRowFormatting()
                 }
             }
+        } header: {
+            Text("Chats")
         }
     }
     
@@ -76,13 +90,13 @@ struct ChatsView: View {
                                     .font(.caption)
                                     .foregroundStyle(.secondary)
                             }
-                            .anyButton(.plain) {
+                            .anyButton {
                                 onAvatarPressed(avatar: avatar)
                             }
                         }
                     }
                 }
-                .padding(12)
+                .padding(.top, 12)
             }
             .frame(height: 120)
             .scrollIndicators(.hidden)
@@ -103,4 +117,5 @@ struct ChatsView: View {
 
 #Preview {
     ChatsView()
+        .environment(AvatarManager(service: MockAvatarService()))
 }

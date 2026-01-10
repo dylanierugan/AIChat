@@ -15,6 +15,7 @@
 		375BB27E2E66B92D00560381 /* SwiftfulUtilities in Frameworks */ = {isa = PBXBuildFile; productRef = 375BB27D2E66B92D00560381 /* SwiftfulUtilities */; };
 		377175B12DB759310051436E /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 377175B02DB759310051436E /* SDWebImageSwiftUI */; };
 		377DB2172EFF5F760084B66B /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 377DB2162EFF5F760084B66B /* FirebaseStorage */; };
+		377DB2192F001E1A0084B66B /* Secrets.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 377DB2182F001E150084B66B /* Secrets.xcconfig */; };
 		378974732EC16F9100CB53F1 /* SignInAppleAsync in Frameworks */ = {isa = PBXBuildFile; productRef = 378974722EC16F9100CB53F1 /* SignInAppleAsync */; };
 /* End PBXBuildFile section */
 
@@ -37,6 +38,7 @@
 
 /* Begin PBXFileReference section */
 		37472BC12EB9879500FDBC96 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		377DB2182F001E150084B66B /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		37AE09C52D9D52C0001AB884 /* AIChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AIChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		37AE09D62D9D52C2001AB884 /* AIChatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AIChatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		37AE09E02D9D52C2001AB884 /* AIChatUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AIChatUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -103,6 +105,7 @@
 		37AE09BC2D9D52C0001AB884 = {
 			isa = PBXGroup;
 			children = (
+				377DB2182F001E150084B66B /* Secrets.xcconfig */,
 				37AE09C72D9D52C0001AB884 /* AIChat */,
 				37AE09D92D9D52C2001AB884 /* AIChatTests */,
 				37AE09E32D9D52C2001AB884 /* AIChatUITests */,
@@ -260,6 +263,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				37472BC22EB9879500FDBC96 /* GoogleService-Info.plist in Resources */,
+				377DB2192F001E1A0084B66B /* Secrets.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -455,6 +459,7 @@
 		};
 		37AE09EB2D9D52C2001AB884 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 377DB2182F001E150084B66B /* Secrets.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -498,6 +503,7 @@
 		};
 		37AE09EC2D9D52C2001AB884 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 377DB2182F001E150084B66B /* Secrets.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

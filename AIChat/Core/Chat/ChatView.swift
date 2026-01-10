@@ -9,24 +9,25 @@ import SwiftUI
 
 struct ChatView: View {
     
+    @Environment(AvatarManager.self) private var avatarManager
+    
     @State private var chatMessages: [ChatMessageModel] = ChatMessageModel.mocks
-    @State private var avatar: AvatarModel? = .mock
+    @State private var avatar: AvatarModel?
     @State private var currentUser: UserModel? = .mock
     @State private var textFieldText: String = ""
     @State private var scrollPosition: String?
     
-    @State private var showChatSettings: AnyAppAlert?
     @State private var showAlert: AnyAppAlert?
+    @State private var showChatSettings: AnyAppAlert?
     @State private var showProfileModal: Bool = false
     
     var avatarId: String = AvatarModel.mock.avatarId
-    
+
     var body: some View {
         VStack(spacing: 0) {
             scrollViewSection
             textFieldSection
         }
-        .animation(.bouncy, value: showProfileModal)
         .navigationTitle(avatar?.name ?? "Chat")
         .toolbarTitleDisplayMode(.inline)
         .toolbar {
@@ -34,55 +35,31 @@ struct ChatView: View {
                 Image(systemName: "ellipsis")
                     .padding(8)
                     .anyButton {
-                        chatSettingsTapped()
+                        onChatSettingsPressed()
                     }
             }
         }
         .showCustomAlert(type: .confirmationDialog, alert: $showChatSettings)
         .showCustomAlert(alert: $showAlert)
         .showModal(showModal: $showProfileModal) {
-            if showProfileModal {
-                Color.black.opacity(0.6)
-                    .ignoresSafeArea()
-                    .transition(AnyTransition.opacity.animation(.smooth))
-                    .onTapGesture {
-                        showProfileModal = false
-                    }
-                
-                if let avatar {
-                    profileModal(avatar: avatar)
-                }
+            if let avatar {
+                profileModal(avatar: avatar)
             }
+        }
+        .task {
+            await loadAvatar()
         }
     }
     
-    private var textFieldSection: some View {
-        TextField("Say something...", text: $textFieldText)
-            .keyboardType(.alphabet)
-            .autocorrectionDisabled()
-            .padding(12)
-            .padding(.trailing, 60)
-            .overlay(alignment: .trailing) {
-                Image(systemName: "arrow.up.circle.fill")
-                    .font(.system(size: 32))
-                    .padding(.trailing, 4)
-                    .foregroundStyle(.accent)
-                    .anyButton(.plain, action: {
-                        onSendMessagePressed()
-                    })
-            }
-            .background(
-                ZStack {
-                    RoundedRectangle(cornerRadius: 100)
-                        .fill(Color(uiColor: .systemBackground))
-                    
-                    RoundedRectangle(cornerRadius: 100)
-                        .stroke(Color.gray.opacity(0.3), lineWidth: 1)
-                }
-            )
-            .padding(.horizontal, 12)
-            .padding(.vertical, 6)
-            .background(Color(uiColor: .secondarySystemBackground))
+    private func loadAvatar() async {
+        do {
+            let avatar = try await avatarManager.getAvatar(id: avatarId)
+            
+            self.avatar = avatar
+            try? avatarManager.addRecentAvatar(avatar: avatar)
+        } catch {
+            print("Error loading avatar: \(error)")
+        }
     }
     
     private var scrollViewSection: some View {
@@ -94,7 +71,7 @@ struct ChatView: View {
                         message: message,
                         isCurrentUser: isCurrentUser,
                         imageName: isCurrentUser ? nil : avatar?.profileImageName,
-                        onImageTapped: onAvatarImageTapped
+                        onImageTapped: onAvatarImagePressed
                     )
                     .id(message.id)
                 }
@@ -109,24 +86,58 @@ struct ChatView: View {
         .animation(.default, value: scrollPosition)
     }
     
+    private var textFieldSection: some View {
+        TextField("Say something...", text: $textFieldText)
+            .keyboardType(.alphabet)
+            .autocorrectionDisabled()
+            .padding(12)
+            .padding(.trailing, 60)
+            .overlay(
+                Image(systemName: "arrow.up.circle.fill")
+                    .font(.system(size: 32))
+                    .padding(.trailing, 4)
+                    .foregroundStyle(.accent)
+                    .anyButton(.plain, action: {
+                        onSendMessagePressed()
+                    })
+                
+                , alignment: .trailing
+            )
+            .background(
+                ZStack {
+                    RoundedRectangle(cornerRadius: 100)
+                        .fill(Color(uiColor: .systemBackground))
+                    
+                    RoundedRectangle(cornerRadius: 100)
+                        .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+                }
+            )
+            .padding(.horizontal, 12)
+            .padding(.vertical, 6)
+            .background(Color(uiColor: .secondarySystemBackground))
+    }
+    
     private func profileModal(avatar: AvatarModel) -> some View {
         ProfileModalView(
             imageName: avatar.profileImageName,
             title: avatar.name,
             subtitle: avatar.characterOption?.rawValue.capitalized,
-            headline: avatar.characterDescription) {
-                showProfileModal = false
-            }
-            .padding(40)
-            .transition(.slide)
+            headline: avatar.characterDescription,
+//            onXMarkPressed: {
+//                showProfileModal = false
+//            }
+        )
+        .padding(40)
+        .transition(.slide)
     }
     
     private func onSendMessagePressed() {
         guard let currentUser else { return }
+        
         let content = textFieldText
         
         do {
-            try TextValidationHelper.checkIfTextIsValid(text: content)
+            try TextValidationHelper.checkIfTextIsValid(text: content, minimumCharacterCount: 3)
             
             let message = ChatMessageModel(
                 id: UUID().uuidString,
@@ -146,14 +157,14 @@ struct ChatView: View {
         }
     }
     
-    private func chatSettingsTapped() {
+    private func onChatSettingsPressed() {
         showChatSettings = AnyAppAlert(
             title: "",
             subtitle: "What would you like to do?",
             buttons: {
                 AnyView(
                     Group {
-                        Button("Report User", role: .destructive) {
+                        Button("Report User / Chat", role: .destructive) {
                             
                         }
                         Button("Delete Chat", role: .destructive) {
@@ -165,7 +176,7 @@ struct ChatView: View {
         )
     }
     
-    private func onAvatarImageTapped() {
+    private func onAvatarImagePressed() {
         showProfileModal = true
     }
 }
@@ -173,5 +184,6 @@ struct ChatView: View {
 #Preview {
     NavigationStack {
         ChatView()
+            .environment(AvatarManager(service: MockAvatarService()))
     }
 }
