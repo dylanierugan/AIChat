@@ -10,7 +10,7 @@ import Foundation
 
 enum NavigationPathOption: Hashable {
     case chat(avatarId: String)
-    case category(categroy: CharacterOption, imageName: String)
+    case category(category: CharacterOption, imageName: String)
 }
 
 extension View {
@@ -21,7 +21,7 @@ extension View {
                 switch newValue {
                 case .chat(avatarId: let avatarId):
                     ChatView(avatarId: avatarId)
-                case .category(categroy: let category, imageName: let imageName):
+                case .category(category: let category, imageName: let imageName):
                     CategoryListView(path: path, category: category, imageName: imageName)
                 }
             }
