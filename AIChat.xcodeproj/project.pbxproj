@@ -689,8 +689,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/MacPaw/OpenAI.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.4.7;
+				kind = exactVersion;
+				version = 0.3.0;
 			};
 		};
 		37472BC32EB9893800FDBC96 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ExploreView: View {
     
+    @Environment(AuthManager.self) private var authManager
     @Environment(AvatarManager.self) private var avatarManager
     
     @State private var categories: [CharacterOption] = CharacterOption.allCases
@@ -83,6 +84,8 @@ struct ExploreView: View {
         isLoadingPopular = true
         
         Task {
+            let authId = (try? authManager.getAuthId()) ?? "<unknown>"
+            print("🔥 Firebase user:", authId)
             await loadFeaturedAvatars()
         }
         Task {
@@ -204,3 +207,4 @@ struct ExploreView: View {
     ExploreView()
         .environment(AvatarManager(service: MockAvatarService(delay: 10)))
 }
+

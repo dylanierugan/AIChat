@@ -12,18 +12,16 @@ struct ChatBubbleViewBuilder: View {
     var message: ChatMessageModel = .mock
     var isCurrentUser: Bool = false
     var imageName: String?
-    var onImageTapped: (() -> Void)?
-    
+    var onImagePressed: (() -> Void)?
+
     var body: some View {
         ChatBubbleView(
-            text: message.content ?? "",
+            text: message.content?.message ?? "",
             textColor: isCurrentUser ? .white : .primary,
             backgroundColor: isCurrentUser ? .accent : Color(uiColor: .systemGray6),
             showImage: !isCurrentUser,
             imageName: imageName,
-            onImageTapped: {
-                onImageTapped?()
-            }
+            onImagePressed: onImagePressed
         )
         .frame(maxWidth: .infinity, alignment: isCurrentUser ? .trailing : .leading)
         .padding(.leading, isCurrentUser ? 75 : 0)
@@ -35,22 +33,25 @@ struct ChatBubbleViewBuilder: View {
     ScrollView {
         VStack(spacing: 24) {
             ChatBubbleViewBuilder()
-            
             ChatBubbleViewBuilder(isCurrentUser: true)
-            
             ChatBubbleViewBuilder(
                 message: ChatMessageModel(
                     id: UUID().uuidString,
                     chatId: UUID().uuidString,
-                    content: "This is a chat bubble with a lot of lines and a lot of text. This is a chat bubble with a lot of lines and a lot of text.",
+                    authorId: UUID().uuidString,
+                    content: AIChatModel(role: .user, content: "This is some longer content that goes on to multiple lines and keeps on going to another line!"),
+                    seenByIds: nil,
+                    dateCreated: .now
                 )
             )
-            
             ChatBubbleViewBuilder(
                 message: ChatMessageModel(
                     id: UUID().uuidString,
                     chatId: UUID().uuidString,
-                    content: "This is a chat bubble with a lot of lines and a lot of text. This is a chat bubble with a lot of lines and a lot of text.",
+                    authorId: UUID().uuidString,
+                    content: AIChatModel(role: .user, content: "This is some longer content that goes on to multiple lines and keeps on going to another line!"),
+                    seenByIds: nil,
+                    dateCreated: .now
                 ),
                 isCurrentUser: true
             )

@@ -14,7 +14,7 @@ struct ChatBubbleView: View {
     var backgroundColor: Color = Color(uiColor: .systemGray6)
     var showImage: Bool = true
     var imageName: String?
-    var onImageTapped: (() -> Void)?
+    var onImagePressed: (() -> Void)?
     
     let offset: CGFloat = 14
     
@@ -25,7 +25,7 @@ struct ChatBubbleView: View {
                     if let imageName {
                         ImageLoaderView(urlString: imageName)
                             .anyButton {
-                                onImageTapped?()
+                                onImagePressed?()
                             }
                     } else {
                         Rectangle()

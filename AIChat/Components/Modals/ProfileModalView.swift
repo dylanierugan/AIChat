@@ -13,7 +13,7 @@ struct ProfileModalView: View {
     var title: String? = "Alpha"
     var subtitle: String? = "Alien"
     var headline: String? = "An alien in the park."
-    var onXmarkTapped: () -> Void = { }
+    var onXmarkPressed: () -> Void = { }
     
     var body: some View {
         VStack(spacing: 0) {
@@ -53,7 +53,7 @@ struct ProfileModalView: View {
                 .padding(4)
                 .tappableBackground()
                 .anyButton {
-                    onXmarkTapped()
+                    onXmarkPressed()
                 }
                 .padding(8)
             
