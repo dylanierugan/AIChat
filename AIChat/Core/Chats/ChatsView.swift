@@ -107,7 +107,7 @@ struct ChatsView: View {
     }
     
     private func onChatPressed(chat: ChatModel) {
-        path.append(.chat(avatarId: chat.avatarID))
+        path.append(.chat(avatarId: chat.avatarId))
     }
     
     private func onAvatarPressed(avatar: AvatarModel) {

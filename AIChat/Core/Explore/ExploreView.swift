@@ -207,4 +207,3 @@ struct ExploreView: View {
     ExploreView()
         .environment(AvatarManager(service: MockAvatarService(delay: 10)))
 }
-
