@@ -15,8 +15,7 @@ struct ChatRowCellView: View {
     var hasNewChat: Bool = true
     
     var body: some View {
-        
-        HStack {
+        HStack(spacing: 8) {
             ZStack {
                 if let imageName {
                     ImageLoaderView(urlString: imageName)
@@ -33,13 +32,13 @@ struct ChatRowCellView: View {
                     Text(headline)
                         .font(.headline)
                 }
-                
                 if let subheadline {
                     Text(subheadline)
                         .font(.subheadline)
-                        .foregroundColor(.secondary)
+                        .foregroundStyle(.secondary)
                 }
             }
+            .lineLimit(1)
             .frame(maxWidth: .infinity, alignment: .leading)
             
             if hasNewChat {
@@ -64,11 +63,9 @@ struct ChatRowCellView: View {
                 .removeListRowFormatting()
             ChatRowCellView(imageName: nil)
                 .removeListRowFormatting()
-            ChatRowCellView(headline: nil)
+            ChatRowCellView(headline: nil, hasNewChat: false)
                 .removeListRowFormatting()
-            ChatRowCellView(subheadline: nil)
-                .removeListRowFormatting()
-            ChatRowCellView(hasNewChat: false)
+            ChatRowCellView(subheadline: nil, hasNewChat: false)
                 .removeListRowFormatting()
         }
     }

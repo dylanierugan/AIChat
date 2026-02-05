@@ -5,7 +5,6 @@
 //  Created by Dylan Ierugan on 10/22/25.
 //
 
-
 import SwiftUI
 
 struct CategoryListView: View {
@@ -76,7 +75,7 @@ struct CategoryListView: View {
     }
     
     private func onAvatarPressed(avatar: AvatarModel) {
-        path.append(.chat(avatarId: avatar.avatarId))
+        path.append(.chat(avatarId: avatar.avatarId, chat: nil))
     }
 }
 

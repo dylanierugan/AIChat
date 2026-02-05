@@ -18,7 +18,7 @@ struct ChatView: View {
     @State private var chatMessages: [ChatMessageModel] = []
     @State private var avatar: AvatarModel?
     @State private var currentUser: UserModel?
-    @State private var chat: ChatModel?
+    @State var chat: ChatModel?
     
     @State private var textFieldText: String = ""
     @State private var scrollPosition: String?
@@ -111,10 +111,11 @@ struct ChatView: View {
         do {
             let chatId = try getChatId()
             
-            for try await value in chatManager.streamChatMessages(chatId: chatId) {
-                chatMessages = value.sorted {
-                    $0.dateCreatedCalculated < $1.dateCreatedCalculated
-                }
+            for try await value in chatManager.streamChatMessages(chatId: chatId, onListenerConfigured: { listener in
+                messageListener?.remove()
+                messageListener = listener
+            }) {
+                chatMessages = value.sortedByKeyPath(keyPath: \.dateCreatedCalculated, ascending: true)
                 scrollPosition = chatMessages.last?.id
             }
         } catch {
