@@ -13,16 +13,32 @@ struct ProfileModalView: View {
     var title: String? = "Alpha"
     var subtitle: String? = "Alien"
     var headline: String? = "An alien in the park."
-    var onXmarkPressed: () -> Void = { }
+    var onXMarkPressed: () -> Void = { }
     
     var body: some View {
         VStack(spacing: 0) {
-            if let imageName {
-                ImageLoaderView(urlString: imageName)
-                    .aspectRatio(1, contentMode: .fit)
+            ZStack(alignment: .topTrailing) {
+                VStack {
+                    if let imageName {
+                        ImageLoaderView(
+                            urlString: imageName,
+                        )
+                        .aspectRatio(1, contentMode: .fit)
+                    }
+                }
+                
+                Image(systemName: "xmark.circle.fill")
+                    .font(.title)
+                    .foregroundStyle(Color.black)
+                    .padding(4)
+                    .tappableBackground()
+                    .anyButton {
+                        onXMarkPressed()
+                    }
+                    .padding(8)
             }
             
-            VStack(alignment: .leading, spacing: 16) {
+            VStack(alignment: .leading, spacing: 4) {
                 if let title {
                     Text(title)
                         .font(.title)
@@ -34,35 +50,20 @@ struct ProfileModalView: View {
                         .foregroundStyle(.secondary)
                 }
                 if let headline {
-                    HStack {
-                        Text(headline)
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
-                    }
+                    Text(headline)
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
                 }
             }
             .padding(24)
             .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .background(.ultraThinMaterial)
+        .background(.thinMaterial)
         .cornerRadius(16)
-        .overlay(
-            Image(systemName: "xmark.circle.fill")
-                .font(.title)
-                .foregroundStyle(Color.black)
-                .padding(4)
-                .tappableBackground()
-                .anyButton {
-                    onXmarkPressed()
-                }
-                .padding(8)
-            
-            , alignment: .topTrailing
-        )
     }
 }
 
-#Preview("Modal with Image") {
+#Preview("Modal w/ Image") {
     ZStack {
         Color.gray.ignoresSafeArea()
         
@@ -70,8 +71,7 @@ struct ProfileModalView: View {
             .padding(40)
     }
 }
-
-#Preview("Modal without Image") {
+#Preview("Modal w/out Image") {
     ZStack {
         Color.gray.ignoresSafeArea()
         

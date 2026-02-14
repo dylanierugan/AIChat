@@ -5,7 +5,6 @@
 //  Created by Dylan Ierugan on 2/7/26.
 //
 
-
 import FirebaseFirestore
 import SwiftfulFirestore
 
@@ -32,7 +31,7 @@ struct FirebaseChatService: ChatService {
 //            .whereField(ChatModel.CodingKeys.userId.rawValue, isEqualTo: userId)
 //            .whereField(ChatModel.CodingKeys.avatarId.rawValue, isEqualTo: avatarId)
 //            .getAllDocuments()
-//        
+//
 //        return result.first
         try await collection.getDocument(id: ChatModel.chatId(userId: userId, avatarId: avatarId))
     }
@@ -62,7 +61,7 @@ struct FirebaseChatService: ChatService {
         return messages.first
     }
     
-    func streamChatMessages(chatId: String, onListenerConfigured: @escaping (ListenerRegistration) -> Void) -> AsyncThrowingStream<[ChatMessageModel], Error> {
+    func streamChatMessages(chatId: String, onListenerConfigured: @escaping (AnyListener) -> Void) -> AsyncThrowingStream<[ChatMessageModel], Error> {
         messagesCollection(chatId: chatId).streamAllDocuments()
     }
     
