@@ -16,7 +16,6 @@ struct ChatView: View {
     @Environment(AIManager.self) private var aiManager
     @Environment(\.dismiss) private var dismiss
 
-
     @State private var chatMessages: [ChatMessageModel] = []
     @State private var avatar: AvatarModel?
     @State private var currentUser: UserModel?
@@ -129,6 +128,10 @@ struct ChatView: View {
         ScrollView {
             LazyVStack(spacing: 24) {
                 ForEach(chatMessages) { message in
+                    if messageIsDelayed(message: message) {
+                        timestampView(date: message.dateCreatedCalculated)
+                    }
+
                     let isCurrentUser = message.authorId == authManager.auth?.uid
                     ChatBubbleViewBuilder(
                         message: message,
@@ -137,6 +140,9 @@ struct ChatView: View {
                         imageName: isCurrentUser ? nil : avatar?.profileImageName,
                         onImagePressed: onAvatarImagePressed
                     )
+                    .onAppear {
+                        onMessageDidAppear(message: message)
+                    }
                     .id(message.id)
                 }
             }
@@ -148,6 +154,23 @@ struct ChatView: View {
         .scrollPosition(id: $scrollPosition, anchor: .center)
         .animation(.default, value: chatMessages.count)
         .animation(.default, value: scrollPosition)
+    }
+    
+    private func onMessageDidAppear(message: ChatMessageModel) {
+        Task {
+            do {
+                let uid = try authManager.getAuthId()
+                let chatId = try getChatId()
+                
+                guard !message.hasBeenSeenBy(userId: uid) else {
+                    return
+                }
+                
+                try await chatManager.markChatMessageAsSeen(chatId: chatId, messageId: message.id, userId: uid)
+            } catch {
+                print("Failed to mark message as seen.")
+            }
+        }
     }
     
     private var textFieldSection: some View {
@@ -181,18 +204,48 @@ struct ChatView: View {
             .background(Color(uiColor: .secondarySystemBackground))
     }
     
+    private func messageIsDelayed(message: ChatMessageModel) -> Bool {
+        let currentMessageDate = message.dateCreatedCalculated
+        
+        guard
+            let index = chatMessages.firstIndex(where: { $0.id == message.id }),
+            chatMessages.indices.contains(index - 1)
+        else {
+            return false
+        }
+        
+        let previousMessageDate = chatMessages[index - 1].dateCreatedCalculated
+        let timeDiff = currentMessageDate.timeIntervalSince(previousMessageDate)
+        
+        // Threshold = 60 seconds * 45 minutes
+        let threshold: TimeInterval = 60 * 45
+        return timeDiff > threshold
+    }
+    
     private func profileModal(avatar: AvatarModel) -> some View {
         ProfileModalView(
             imageName: avatar.profileImageName,
             title: avatar.name,
             subtitle: avatar.characterOption?.rawValue.capitalized,
             headline: avatar.characterDescription,
-            onXmarkPressed: {
+            onXMarkPressed: {
                 showProfileModal = false
             }
         )
         .padding(40)
         .transition(.slide)
+    }
+    
+    private func timestampView(date: Date) -> some View {
+        Group {
+            Text(date.formatted(date: .abbreviated, time: .omitted))
+            +
+            Text(" • ")
+            +
+            Text(date.formatted(date: .omitted, time: .shortened))
+        }
+        .foregroundStyle(.secondary)
+        .font(.callout)
     }
     
     private func onSendMessagePressed() {
