@@ -10,6 +10,7 @@
 		370475712EECE4FF00803CDF /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 370475702EECE4FF00803CDF /* FirebaseFirestore */; };
 		370475782EEDADB600803CDF /* SwiftfulFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 370475772EEDADB600803CDF /* SwiftfulFirestore */; };
 		3704764A2EF6E9AA00803CDF /* OpenAI in Frameworks */ = {isa = PBXBuildFile; productRef = 370476492EF6E9AA00803CDF /* OpenAI */; };
+		3711B8732F5F268B00D311BB /* Mixpanel in Frameworks */ = {isa = PBXBuildFile; productRef = 3711B8722F5F268B00D311BB /* Mixpanel */; };
 		37472BC22EB9879500FDBC96 /* GoogleService-Info-Prod.plist in Resources */ = {isa = PBXBuildFile; fileRef = 37472BC12EB9879500FDBC96 /* GoogleService-Info-Prod.plist */; };
 		37472BC52EB9893800FDBC96 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 37472BC42EB9893800FDBC96 /* FirebaseAuth */; };
 		375BB27E2E66B92D00560381 /* SwiftfulUtilities in Frameworks */ = {isa = PBXBuildFile; productRef = 375BB27D2E66B92D00560381 /* SwiftfulUtilities */; };
@@ -17,6 +18,7 @@
 		377DB2172EFF5F760084B66B /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 377DB2162EFF5F760084B66B /* FirebaseStorage */; };
 		377DB2192F001E1A0084B66B /* Secrets.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 377DB2182F001E150084B66B /* Secrets.xcconfig */; };
 		378974732EC16F9100CB53F1 /* SignInAppleAsync in Frameworks */ = {isa = PBXBuildFile; productRef = 378974722EC16F9100CB53F1 /* SignInAppleAsync */; };
+		37DADCB82F5B0C860049376E /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 37DADCB72F5B0C860049376E /* FirebaseAnalytics */; };
 		37E435532F48ACD600CB9360 /* GoogleService-Info-Dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = 37E435522F48ACD600CB9360 /* GoogleService-Info-Dev.plist */; };
 /* End PBXBuildFile section */
 
@@ -46,9 +48,22 @@
 		37E435522F48ACD600CB9360 /* GoogleService-Info-Dev.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Dev.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		37DADCBA2F5B0E060049376E /* Exceptions for "AIChat" folder in "AIChat" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 37AE09C42D9D52C0001AB884 /* AIChat */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		37AE09C72D9D52C0001AB884 /* AIChat */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				37DADCBA2F5B0E060049376E /* Exceptions for "AIChat" folder in "AIChat" target */,
+			);
 			path = AIChat;
 			sourceTree = "<group>";
 		};
@@ -75,8 +90,10 @@
 				37472BC52EB9893800FDBC96 /* FirebaseAuth in Frameworks */,
 				3704764A2EF6E9AA00803CDF /* OpenAI in Frameworks */,
 				377DB2172EFF5F760084B66B /* FirebaseStorage in Frameworks */,
+				3711B8732F5F268B00D311BB /* Mixpanel in Frameworks */,
 				370475712EECE4FF00803CDF /* FirebaseFirestore in Frameworks */,
 				375BB27E2E66B92D00560381 /* SwiftfulUtilities in Frameworks */,
+				37DADCB82F5B0C860049376E /* FirebaseAnalytics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -165,6 +182,8 @@
 				370475772EEDADB600803CDF /* SwiftfulFirestore */,
 				370476492EF6E9AA00803CDF /* OpenAI */,
 				377DB2162EFF5F760084B66B /* FirebaseStorage */,
+				37DADCB72F5B0C860049376E /* FirebaseAnalytics */,
+				3711B8722F5F268B00D311BB /* Mixpanel */,
 			);
 			productName = AIChat;
 			productReference = 37AE09C52D9D52C0001AB884 /* AIChat.app */;
@@ -255,6 +274,7 @@
 				378974712EC1680100CB53F1 /* XCRemoteSwiftPackageReference "SignInAppleAsync" */,
 				370475762EEDADB600803CDF /* XCRemoteSwiftPackageReference "SwiftfulFirestore" */,
 				370476482EF6E9AA00803CDF /* XCRemoteSwiftPackageReference "OpenAI" */,
+				3711B8712F5F268B00D311BB /* XCRemoteSwiftPackageReference "mixpanel-swift" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 37AE09C62D9D52C0001AB884 /* Products */;
@@ -485,6 +505,7 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = AIChat/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "AI Chat - Debug";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -529,7 +550,8 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "AI Chat";
+				INFOPLIST_FILE = AIChat/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "AI Chat - Debug";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -725,7 +747,8 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "AI Chat - Mock";
+				INFOPLIST_FILE = AIChat/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "AI Chat - Debug";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -861,6 +884,14 @@
 				version = 0.3.0;
 			};
 		};
+		3711B8712F5F268B00D311BB /* XCRemoteSwiftPackageReference "mixpanel-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mixpanel/mixpanel-swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.2.0;
+			};
+		};
 		37472BC32EB9893800FDBC96 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
@@ -911,6 +942,11 @@
 			package = 370476482EF6E9AA00803CDF /* XCRemoteSwiftPackageReference "OpenAI" */;
 			productName = OpenAI;
 		};
+		3711B8722F5F268B00D311BB /* Mixpanel */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3711B8712F5F268B00D311BB /* XCRemoteSwiftPackageReference "mixpanel-swift" */;
+			productName = Mixpanel;
+		};
 		37472BC42EB9893800FDBC96 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 37472BC32EB9893800FDBC96 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
@@ -934,6 +970,11 @@
 		378974722EC16F9100CB53F1 /* SignInAppleAsync */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SignInAppleAsync;
+		};
+		37DADCB72F5B0C860049376E /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 37472BC32EB9893800FDBC96 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

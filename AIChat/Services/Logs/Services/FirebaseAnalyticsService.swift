@@ -1,3 +1,10 @@
+//
+//  FirebaseAnalyticsService.swift
+//  AIChat
+//
+//  Created by Dylan Ierugan on 3/6/26.
+//
+
 import FirebaseAnalytics
 import Foundation
 

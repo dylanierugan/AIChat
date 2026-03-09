@@ -30,12 +30,21 @@ struct AppView: View {
         }
         .onAppear {
             logManager.identifyUser(userId: "abc123", name: "nick", email: "hi@hi.com")
-            logManager.addUserProperties(dict: UserModel.mock.eventParameters)
+            logManager.addUserProperties(dict: UserModel.mock.eventParameters, isHighPriority: false)
             
             logManager.trackEvent(event: Event.alpha)
             logManager.trackEvent(event: Event.beta)
             logManager.trackEvent(event: Event.gamma)
             logManager.trackEvent(event: Event.delta)
+            
+            let event = AnyLoggableEvent(
+                eventName: "MyNewEvent",
+                parameters: UserModel.mock.eventParameters,
+                type: .analytic
+            )
+            logManager.trackEvent(event: event)
+            
+            logManager.trackEvent(eventName: "AnotherEverIsHere")
         }
         .onChange(of: appState.showTabBar) { _, showTabBar in
             if !showTabBar {
@@ -133,4 +142,3 @@ struct AppView: View {
         .environment(UserManager(services: MockUserServices(user: nil)))
         .environment(AuthManager(service: MockAuthService(user: nil)))
 }
-

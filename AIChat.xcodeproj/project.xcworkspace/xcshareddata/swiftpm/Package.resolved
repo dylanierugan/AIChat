@@ -1,5 +1,5 @@
 {
-  "originHash" : "11aa0b61fa8a459d43e2f65dfcd2c2f619be8652ffeb340168ee2627c4e219f4",
+  "originHash" : "a99bad1b14e78b8e6cb77578ea2ce4a7b8bdddc91590a0eaa6dcd0cdc7649d93",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -107,6 +107,15 @@
       "state" : {
         "revision" : "a0bc79961d7be727d258d33d5a6b2f1023270ba1",
         "version" : "1.22.5"
+      }
+    },
+    {
+      "identity" : "mixpanel-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/mixpanel/mixpanel-swift.git",
+      "state" : {
+        "revision" : "5f3020832a9594d98c129bf010a2bcc9dc4fa959",
+        "version" : "5.2.0"
       }
     },
     {

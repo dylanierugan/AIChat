@@ -1,3 +1,10 @@
+//
+//  String+EXT.swift
+//  AIChat
+//
+//  Created by Dylan Ierugan on 3/6/26.
+//
+
 import Foundation
 
 extension String {
